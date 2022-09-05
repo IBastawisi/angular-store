@@ -1,0 +1,27 @@
+<div class="container mt-5">
+  <p *ngIf="!cartItems.length" class="col text-center">Your cart is empty</p>
+  <div *ngIf="cartItems.length" class="row justify-content-center">
+    <div class="col-auto">
+      <app-product-item *ngFor="let item of cartItems" variant="cart" [product]="item.product"
+        [quantity]="item.quantity" (quantityChange)="updateQuantity($event)"></app-product-item>
+      <p style="text-align: center;">Total: ${{ calculateTotal() }}</p>
+    </div>
+    <div class="col-auto">
+      <form style="width: 280px;" #form="ngForm" (ngSubmit)="onSubmit()">
+        <div class="mb-3">
+          <label for="fullname" class="form-label">Full name</label>
+          <input type="text" class="form-control" id="fullname" placeholder="(Minimum 3 Charachters)" required minlength="3" name="fullname" [(ngModel)]="fullname">
+        </div>
+        <div class="mb-3">
+          <label for="address" class="form-label">Address</label>
+          <input type="text" class="form-control" id="address" placeholder="(Minimum 6 Charachters)" required minlength="6" name="address" [(ngModel)]="address">
+        </div>
+        <div class="mb-3">
+          <label for="cardNumber" class="form-label">Credit card number</label>
+          <input type="text" class="form-control" id="cardNumber" placeholder="(16-digit number)" required minlength="16" name="cardNumber" [(ngModel)]="cardNumber">
+        </div>
+        <button class="btn btn-success w-100" [disabled]="form.invalid">Submit</button>
+      </form>
+    </div>
+  </div>
+</div>

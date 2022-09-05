@@ -1,0 +1,59 @@
+<div *ngIf="product && variant === 'main'" class="card">
+  <a routerLink="/products/{{product.id}}">
+    <img class="card-img-top" [src]="product.url" alt="{{ product.name }}">
+  </a>
+  <div class="card-body">
+    <h5 class="card-title">{{ product.name }}</h5>
+    <p class="card-text">${{ product.price }}</p>
+    <select class="form-select mb-3" [(ngModel)]="quantity">
+      <option *ngFor="let quantity of [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]" [value]="quantity">{{ quantity }}</option>
+    </select>
+    <div class="product-actions row g-1">
+      <button class="btn btn-success" (click)="addToCart()">Add to Cart</button>
+    </div>
+  </div>
+</div>
+
+<div *ngIf="product && variant === 'detailed'" class="container mt-5">
+  <div class="row row-cols-1 justify-content-center">
+    <div class="col-auto">
+      <div class="card mb-3" style="max-width: 540px;">
+        <div class="row g-0">
+          <div class="col-md-4">
+            <img class="img-fluid rounded-start" [src]="product.url" alt="{{ product.name }}">
+          </div>
+          <div class="col-md-8">
+            <div class="card-body">
+              <h5 class="card-title">{{ product.name }}</h5>
+              <p class="card-text">${{ product.price }}</p>
+              <p class="card-text">{{ product.description }}</p>
+              <select class="form-select mb-2" [(ngModel)]="quantity">
+                <option *ngFor="let quantity of [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]" [value]="quantity">{{ quantity }}
+                </option>
+              </select>
+              <div class="product-actions row g-1">
+                <button class="btn btn-success" (click)="addToCart()">Add to Cart</button>
+                <button class="btn btn-secondary" (click)="goBack()">Go Back</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="card mb-3" *ngIf="product && variant === 'cart'">
+  <div class="row g-0">
+    <div class="col-4">
+      <img class="img-fluid rounded-start" width="100px" [src]="product.url" alt="{{ product.name }}">
+    </div>
+    <div class="col-8">
+      <div class="card-body">
+        <h5 class="card-title">{{ product.name }}</h5>
+        <p class="card-text">${{ product.price }}</p>
+        <input type="number" class="form-control" min="0" [(ngModel)]="quantity" (ngModelChange)="updateQuantity()" />
+      </div>
+    </div>
+  </div>
+</div>
