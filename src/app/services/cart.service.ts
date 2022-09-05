@@ -1,26 +1,15 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from "@angular/common/http";
-import { CartItem, Product } from './models/Product';
-import { map } from 'rxjs/operators';
+import { CartItem } from 'src/app/models/Cart';
+import { Product } from 'src/app/models/Product';
 
 @Injectable({
   providedIn: 'root'
 })
-export class ProductService {
-
-  constructor(private Http: HttpClient) { }
+export class CartService {
 
   cartItems: CartItem[] = [];
 
-  /** GET all products **/
-  getProducts() {
-    return this.Http.get<Product[]>('assets/data.json');
-  }
-
-  /** GET product by id.*/
-  getProduct(id: number) {
-    return this.getProducts().pipe(map(result => result.find((product) => product.id === id)))
-  }
+  constructor() { }
 
   /** add a product to cart */
   addToCart(product: Product, quantity: number) {
@@ -58,4 +47,5 @@ export class ProductService {
     this.cartItems = [];
     return this.cartItems;
   }
+
 }

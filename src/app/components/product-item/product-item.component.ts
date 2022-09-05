@@ -1,6 +1,7 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { Product } from 'src/app/models/Product';
-import { ProductService } from 'src/app/product.service';
+import { ProductService } from 'src/app/services/product.service';
+import { CartService } from 'src/app/services/cart.service';
 import { ActivatedRoute } from '@angular/router';
 import { Location } from '@angular/common';
 
@@ -14,12 +15,17 @@ export class ProductItemComponent implements OnInit {
   @Input() quantity = 1;
   @Output() quantityChange = new EventEmitter<{ id: number, quantity: number }>();
 
-  constructor(private service: ProductService, private route: ActivatedRoute, private location: Location) { }
+  constructor(
+    private ProductService: ProductService,
+    private CartService: CartService,
+    private route: ActivatedRoute,
+    private location: Location
+  ) { }
 
   ngOnInit(): void {
     if (!this.product) {
       const id = Number(this.route.snapshot.paramMap.get('id'));
-      this.service.getProduct(id).subscribe((product) => this.product = product);
+      this.ProductService.getProduct(id).subscribe((product) => this.product = product);
     }
     this.route.data.subscribe(data => {
       this.variant = data['variant'] || this.variant;
@@ -28,12 +34,12 @@ export class ProductItemComponent implements OnInit {
 
   addToCart() {
     if (!this.product) return;
-    this.service.addToCart(this.product, +this.quantity);
+    this.CartService.addToCart(this.product, +this.quantity);
     alert(`${this.quantity} of ${this.product.name} was added to cart`);
   }
 
   updateQuantity() {
-    if(!this.product) return;
+    if (!this.product) return;
     this.quantityChange.emit({ id: this.product.id, quantity: this.quantity });
   }
 

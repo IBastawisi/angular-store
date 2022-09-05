@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { CartItem } from 'src/app/models/Product';
-import { ProductService } from 'src/app/product.service';
+import { CartItem } from 'src/app/models/Cart';
+import { CartService } from '../../services/cart.service';
 
 @Component({
   selector: 'app-cart',
@@ -14,7 +14,7 @@ export class CartComponent implements OnInit {
   address?: string;
   cardNumber?: string;
 
-  constructor(private service: ProductService, private router: Router) { }
+  constructor(private service: CartService, private router: Router) { }
 
   ngOnInit(): void {
     this.cartItems = this.service.getCartItems();

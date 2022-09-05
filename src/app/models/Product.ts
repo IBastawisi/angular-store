@@ -5,8 +5,3 @@ export interface Product {
   description: string;
   url: string;
 }
-
-export interface CartItem {
-  product: Product;
-  quantity: number;
-}
