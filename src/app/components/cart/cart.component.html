@@ -10,15 +10,48 @@
       <form style="width: 280px;" #form="ngForm" (ngSubmit)="onSubmit()">
         <div class="mb-3">
           <label for="fullname" class="form-label">Full name</label>
-          <input type="text" class="form-control" id="fullname" placeholder="(Minimum 3 Charachters)" required minlength="3" name="fullname" [(ngModel)]="fullname">
+          <input type="text" class="form-control" placeholder="(Minimum 3 Charachters)" id="fullname" name="fullname"
+            [(ngModel)]="fullname" #FullName="ngModel" required minlength="3"
+            [ngClass]="{'is-invalid': FullName.dirty && FullName.invalid, 'is-valid': FullName.dirty && FullName.valid}">
+          <div *ngIf="FullName.dirty && FullName.invalid" class="invalid-feedback">
+            <span *ngIf="FullName.errors && FullName.errors['required']">
+              FullName is required
+            </span>
+            <span *ngIf="FullName.errors && FullName.errors['minlength']">
+              FullName must be at least 3 characters
+            </span>
+          </div>
         </div>
         <div class="mb-3">
           <label for="address" class="form-label">Address</label>
-          <input type="text" class="form-control" id="address" placeholder="(Minimum 6 Charachters)" required minlength="6" name="address" [(ngModel)]="address">
+          <input type="text" class="form-control" placeholder="(Minimum 6 Charachters)" id="address" name="address"
+            [(ngModel)]="address" #Address="ngModel" required minlength="6"
+            [ngClass]="{'is-invalid': Address.dirty && Address.invalid, 'is-valid': Address.dirty && Address.valid}">
+          <div *ngIf="Address.dirty && Address.invalid" class="invalid-feedback">
+            <span *ngIf="Address.errors && Address.errors['required']">
+              Address is required
+            </span>
+            <span *ngIf="Address.errors && Address.errors['minlength']">
+              Address must be at least 6 characters
+            </span>
+          </div>
         </div>
         <div class="mb-3">
           <label for="cardNumber" class="form-label">Credit card number</label>
-          <input type="number" class="form-control" id="cardNumber" placeholder="(16-digit number)" required minlength="16" pattern="[0-9]{16}" name="cardNumber" [(ngModel)]="cardNumber">
+          <input type="text" class="form-control" placeholder="(16-digit number)" id="cardNumber" name="cardNumber"
+            [(ngModel)]="cardNumber" #CardNumber="ngModel" required minlength="16" maxlength="16" pattern="[0-9]{16}"
+            [ngClass]="{'is-invalid': CardNumber.dirty && CardNumber.invalid, 'is-valid': CardNumber.dirty && CardNumber.valid}">
+          <div *ngIf="CardNumber.dirty && CardNumber.invalid" class="invalid-feedback">
+            <span *ngIf="CardNumber.errors && CardNumber.errors['required']">
+              CardNumber is required
+            </span>
+            <span *ngIf="CardNumber.errors && CardNumber.errors['minlength']">
+              CardNumber must be 16 numbers
+            </span>
+            <span *ngIf="CardNumber.errors && CardNumber.errors['pattern']">
+              CardNumber must contain numbers only
+            </span>
+          </div>
         </div>
         <button class="btn btn-success w-100" [disabled]="form.invalid">Submit</button>
       </form>
